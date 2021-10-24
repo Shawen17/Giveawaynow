@@ -1,0 +1,66 @@
+{% extends 'givers/base.html' %}
+
+{% block content %}
+<div class="top">
+<div class="search-container">
+<form action="{% url 'giveaway'  %}" method="get">
+    <input name="q" type="text" placeholder="Search...">
+    <button type="submit"><i class="fas fa-search"></i></button>
+</form>
+</div>
+</div>
+
+
+
+{% if page_obj.object_list %}
+<h3 style ='text-align: center;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;'>Gifts up For Grabs</h3>
+
+<div class="container-fluid">
+    {% for i in page_obj.object_list %}
+    {% if forloop.counter0|divisibleby:4 %}<div class="row projects-holder">{% endif %} 
+        
+            <div class="col-md-3 col-sm-6">
+                <div class="project-item">
+                    <img style="border-radius: 12px;" src="{{ i.image.url }}" alt="pic" height="150" width="150">
+                    <div class="project-hover">
+                        <div class="inside">
+                            <h5><a href="#">{{ i.name }}</a></h5>
+                            <p>  {{ i.category }}---({{ i.quantity }})</p>
+                        </div>
+                    </div>
+                </div>    
+                
+                    <div class="menu">
+                        <form method="POST" action="{% url 'selectgift' i.id %}">
+                            {% csrf_token %}
+                            <button class="button button1"   type="submit">Pickup</button>
+                        </form>
+                    </div>
+                
+            </div>  
+        {% if forloop.counter|divisibleby:4 or forloop.last %} </div>{% endif %} 
+    {% endfor %}       
+              
+</div>
+    {% else %}  
+    <h4 style="text-align: center;padding-top: 20px;">No Available Gift in your State of Residence</h4>
+</div> 
+{% endif %}
+<div class="row" style="padding-top: 10px;">
+    <div class="col-md-5"></div>
+    <div class="col-md-2" style="text-align: center;">
+        {% if page_obj.object_list %}
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"><<</a>
+        {% endif %}
+        <span>{{ page_obj.number }}</span>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">>></a>
+        {% endif %}
+        {% endif %}
+    </div>
+    <div class="col-md-5"></div>
+</div>
+
+{% endblock %}
+

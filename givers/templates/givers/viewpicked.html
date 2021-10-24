@@ -1,0 +1,24 @@
+{% extends 'givers/base.html' %}
+
+
+{%  block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="accstyle">
+<h3 style="padding-left: 30px;">kindly review your {{ pick.name }} gift </h3>
+<hr>
+<form class="form-width" style="padding-left: 40px;" method="POST" action="{% url 'redeempicked' picked.id  %}">
+    {% csrf_token %}
+    <table>
+        {{ form | crispy }}
+    </table>
+    <div style="padding-left: 15px;">
+    
+    <button class="button button2" ><a href="{% url 'redeempicked' picked.id  %}">redeem</a></button>
+    <button class="button button3"   type="submit" value='Return' name='return'>Return</button>
+    <button class="button button4"   type="submit" value='Mark' name='mark'>Mark as Received</button>
+    </div>
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'givers/base.html'  %}
+
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+
+{% block content %}
+{% include 'givers/message.html' %}
+
+<h1 style='text-align: center;font-weight: bolder;'>Login here</h1>
+<h2 style='text-align: center;'>{{ error }}</h2>
+<br>
+<div class="row d-flex justify-content-center">
+<div class="col-md-8 mx-auto social-container my-2 order-md-1">
+    <ul>
+        <li>
+    
+            <button id='ig-color' class="btn mb-2 social-text">
+                <i class="fab fa-instagram"></i><a href="#">Login with Instagram</a>
+            </button>
+        </li>
+        <li>
+            <button id='fb-color' class="btn mb-2 social-text">
+                <i class="fab fa-facebook-f"></i><a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+            </button>
+        </li>
+        <li>
+            <button id='ld-color' class="btn mb-2 social-text">
+                <i class="fab fa-google"></i><a href="{% provider_login_url 'google' %}">Login with Google</a>
+            </button>
+        </li>
+    </ul>
+</div>
+</div>
+
+<div class="separator">OR</div>
+<div class="row d-flex justify-content-center">
+<form class="form-width", method='POST',action="{% url 'loginuser' %}">
+    <table>
+        {% csrf_token %}
+        {{ form | crispy }}
+    </table>
+    <!-- reCAPTCHA input -->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response"> 
+    <button class="button button1"  type='submit' >Login</button><span style="padding-left: 40px;"><a href="{% url 'signupuser' %}">New user? Signup</a></span>
+    <a href="{% url 'password_reset' %}">Forgot Password?</a>  
+</form>
+</div>
+
+{% endblock %}

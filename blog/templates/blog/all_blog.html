@@ -1,0 +1,61 @@
+{% extends 'givers/base_blog_genre.html' %} 
+
+
+{% load static %}
+{% block content %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Giveaway Blog</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" />
+    <link rel="stylesheet" href="{% static 'givers/css/all.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'givers/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'givers/css/templatemo-style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'givers/css/blog.css' %}"/>
+<!--
+Parallo Template
+https://templatemo.com/tm-534-parallo
+-->
+  </head>
+<body>
+    <div class="parallax-window" data-parallax="scroll" data-image-src="{% static 'givers/img/bg-01.jpg' %}">
+
+
+
+{% for i in page_obj.object_list  %}
+<ul>
+    <li style="text-align: left;">
+
+        <a href = "{% url 'blog:detail' i.id %}"><h4 style="color: white;">{{ i.title|upper }}</h4></a> 
+        <h4 style="color: white;">{{ i.date|date:'d M Y'|upper }}</h4> 
+        <p style="color: white;">{{ i.genre }}</p>
+        <p style="color: white;">{{ i.story|safe|truncatechars:50 }}</p> <br>
+        <hr>
+    </li>
+</ul>
+{% endfor  %} 
+<div class="row" style="padding-top: 10px;">
+    <div class="col-md-5"></div>
+    <div class="col-md-2" style="text-align: center;">
+        {% if page_obj.object_list %}
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" style="color:white"><<</a>
+        {% endif %}
+        <span style="color:white">{{ page_obj.number }}</span>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" style="color:white">>></a>
+        {% endif %}
+        {% endif %}
+    </div>
+    <div class="col-md-5"></div>
+</div>
+    </div>
+    <script src="{% static 'givers/js/jquery.min.js' %}"></script>
+    <script src="{% static 'givers/js/parallax.min.js' %}"></script>
+    <script src="{% static 'givers/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends  'givers/base_dashboard.html' %}
+
+
+{% load static %}
+
+
+{% load crispy_forms_tags %}
+ 
+{% block content %}
+{% include 'givers/message.html' %}
+
+<div class="dash-main">
+<div style="padding-top: 10px;">
+<div class='row'>
+    <div class='col-md-5 col-lg-4'><p style="padding-left:10px;">welcome {{ user.username }}</p></div>
+    <div class='col-md-4 col-lg-6'>{{ msg }}</div>
+    <div class='col-md-3 col-lg-2'>
+        <figure class="image-right">
+            {% if user.profile.profile_pic %}
+            <img  style="border-radius:12px;padding-right: 30px;" src="{{ user.profile.profile_pic.url }}" alt="pic" height=120, width=120>
+            {% endif %}
+        </figure>
+    </div>
+</div>
+<p style="padding-bottom: 30px;padding-left:10px;">You have given out a total of <label style="background-color:springgreen;border: 2px grey solid;padding:5px;border-radius: 8px;">{{ all_gift }}</label> gift{{ all_gift|pluralize }}</p>
+<div class='row'>
+    <div class="col-md-5 col-lg-5">
+        {% if gifts %}
+        <h5 style ='text-align: left;padding-left: 12px;font-size: 0.9em;'>List of Gifted Items<span style="padding-left: 30px;"></span><label style="background-color:springgreen;border: 2px grey solid;padding:5px;border-radius: 12px;">{{ mis_count }}</label></h5>
+        <div class="accstyle" style="border: red 2x solid;border-radius: 8px;padding-left: 10px;">
+        <table style="width: 60%;">
+            <tr style="font-size: 0.7em;background-color:lightgreen;">
+                <th>Name</th>
+                <th>Category</th>
+                <th>Picture</th>
+            </tr>
+            {% for i in gifts %}
+            <tr style="font-size: small;">
+                <td><a style="color:white" href="{% url 'viewgift' i.id %}"> {{ i.name }}</a></td>
+                <td><a style="color:white" href="{% url 'viewgift' i.id %}"> {{ i.category }}</a></td>
+                <td><a href="{% url 'viewgift' i.id %}"><img style="border-radius: 12px;padding-top:20px ;" alt="pic" height=50, width=50 src="{{ i.image.url }}"></a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="col-md-7 col-lg-7">
+        {% if picks %}
+        <h5 style="padding-left: 30px;font-size: 0.9em;">List of Requested Items<span style="padding-left: 30px;"></span><label style="background-color:springgreen;border: 2px grey solid;padding:5px;border-radius: 12px;">{{ pick_count }}</label></h5>
+    <div class="accstyle"  style="border-radius: 8px;border: beige 2px solid;"> 
+    <form method="POST"  action="{% url 'cancelpicked' %}"> 
+        <table style="width: 90%;">
+        <tr style="padding-top: 30px;background-color:lightgreen;font-size: 0.7em;">
+            <th>Select</th>
+            <th>Ticket</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Picture</th>
+            <th>Status</th>
+            <th>Amount</th>
+            
+        </tr>
+        {% for j in picks %}
+        {% if not j.gift.delivered %}
+        <tr style="font-size: small;" class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
+            <td width="20%"><input type="checkbox" name="chk[]" value="{{ j.id }}"></td>
+            <td><a style="color:black" href="{% url 'viewpicked' j.id %}">{{ j.gift.ticket }}</a></td>
+            <td><a style="color:black" href="{% url 'viewpicked' j.id %}"> {{ j.name }}</a></td>
+            <td><a style="color:black" href="{% url 'viewpicked' j.id %}"> {{ j.category }}</a></td>
+            <td><a href="{% url 'viewpicked' j.id %}"><img style="border-radius: 12px;padding-top:20px ;" alt="pic" height=50, width=50 src="{{ j.image.url }}"></a></td>
+            {% if j.gift.amount %}
+            <td>Requested</td>
+            <td>{{ j.gift.amount }}</td>
+            {% endif %}
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+    {% csrf_token %}
+
+    
+    <div style="padding-top: 40px;"> 
+
+        <button id="btn-appear" class="button button2" value="Redeem" name="redeem" type="submit">Redeem</button>
+        <button class="button button3" value="Return"  name="return"  type="submit">Return</button>
+        <button class="button button4" value="Received" name="received" type="submit">Mark as Received</button>
+    </div>
+    
+    </form> 
+    </div>
+    {% endif %}
+    
+    </div>
+    </div>
+    <div class='row' style="padding-top: 20px;">
+        <div class="col-md-5 col-lg-5"></div>
+        <div class="col-md-7 col-lg-7">
+            {% if amount %}
+            <a  href=""><label style="background-color:lightblue;border: 2px grey solid;padding:5px;border-radius: 8px;color:black;">Make Payment {{ amount }}</label></a>
+            {% endif %}
+        </div>
+        
+    </div>
+    </div>
+</div>
+
+   
+
+{% endblock %}

@@ -1,0 +1,145 @@
+{% load static %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Giveaway</title>
+        <meta name="description" content="">
+        <!-- 
+    	Volton Template
+    	http://www.templatemo.com/tm-441-volton
+        -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="{% static 'givers/css/normalize.css' %}">
+        <link rel="stylesheet" href="{% static 'givers/css/font-awesome.css' %}">
+        <link rel="stylesheet" href="{% static 'givers/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static  'givers/css/templatemo-style.css' %}">
+        <link rel="stylesheet" href="{% static  'givers/css/base.css' %}">
+        <script src="{% static 'givers/js/vendor/modernizr-2.6.2.min.js' %}"></script>
+        <link rel="icon" type="image/jpg"  href="{% static 'givers/img/car1.jpg' %}">
+    <title>Giveaway</title>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+       
+<!--Nav bar-->
+        
+<nav class="navbar navbar-expand-md navbar-light" style="background-color:teal;">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+             <img src="{% static 'givers/img/car1.jpg' %}" width="30" height="30" class="d-inline-block align-top">
+            <span>Giveaway</span>
+        </a>
+        <a class="navbar-brand" href=""><span style="color: rgb(16, 196, 202);">Blog</span>
+       </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            
+        {% if user.is_authenticated %}
+            <ul class="navbar-nav mr-auto">
+    
+                    <li class="nav-item {{ creategift }}">
+                        <a class="nav-link" href="{% url 'creategift' %}">Offer gift</a>
+                    </li>
+                    <li class="nav-item {{ user_account }}">
+                        <a class="nav-link" href="{% url 'user_account' %}">dashboard</a>
+                    </li>
+                    <li class="nav-item {{ edit_profile }}">
+                        <a class='nav-link' href="{% url 'account_update' %}">Update Profile</a>
+                    </li>
+            </ul>
+        {% endif %}
+        <ul class="navbar-nav ml-auto">
+            
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="{% url 'giveaway' %}" onclick="$('#signOutBtn').click()" class="nav-link">Gifts</a>
+                    <a>
+                        <form style='display: none;' method="POST" action="{% url 'giveaway' %}">
+                            {% csrf_token %}
+                            <button id="signOutBtn" type="submit">Gift</button>
+                        </form>
+                    </a>
+                </li>
+                <li class="nav-item">
+                        <a href="{% url 'logoutuser' %}" onclick="$('#signOutBtn').click()" class="nav-link">Logout</a>
+                        <a>
+                            <form style='display: none;' method="POST" action="{% url 'logoutuser' %}">
+                                {% csrf_token %}
+                                <button id="signOutBtn" type="submit">Logout</button>
+                            </form>
+                        </a>
+                </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signupuser' %}">SignUp</a>
+                    </li>
+                    <li class="nav-item" style="color:white;">
+                        <a class="nav-link" href="{% url 'loginuser' %}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    </nav>
+        {% block content %}{% endblock %}
+
+       
+
+        <!-- MAIN CONTENT -->
+        
+
+                
+                    <div class="row" id="footer" style='padding-top: 60px;'>
+                        <div class="col-md-12 text-center">
+                            
+                                
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                                    <a href="#"><i class="fa fa-youtube"></i></a>
+                                    <a href="#"><i class="fa fa-rss"></i></a>
+                                
+                            
+                            <p class="copyright-text">Copyright &copy; 2021 Giveaway</p>
+                        </div>
+                    </div>
+
+                
+
+        <script src="{% static 'givers/js/vendor/jquery-1.10.2.min.js' %}"></script>
+        <script src="{% static 'givers/js/min/plugins.min.js' %}"></script>
+        <script src="{% static  'givers/js/min/main.min.js' %}"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script>
+            const form = document.querySelector('#redeem-form');
+            const btn_appear = document.querySelector('#btn-appear');
+            const btn_disappear =document.getElementById('btn-disappear');
+            btn_appear.addEventListener('click',formAppear);
+            btn_disappear.addEventListener('click',formDisappear);
+            function formAppear(){
+                form.style.display = 'block';
+            }
+            function formDisappear(){
+                form.style.display = 'none';
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,21 @@
+{% extends 'givers/base.html' %} 
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="account">
+    <div class="container">
+        <h1 style="text-align: center;font-weight: bolder;padding-top: 20px;">Provide Delivery Information</h1>
+        <br>
+        <br>
+        <div class="row d-flex justify-content-center">
+        <form class="form-width" style="max-width: 18rem;border:slategray 2px solid;padding: 50px;border-radius: 15px;background-color: white;"  method ='POST' action="{% url 'redeemgift' %}">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <button class="button button1" type='submit' style='background-color:aqua;'>Submit</button>
+        </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

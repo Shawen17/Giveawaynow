@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600"/>
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+<link rel="stylesheet" href="{% static 'givers/css/base.css' %}"/>
+<link rel="icon" type="image/jpg"  href="{% static 'givers/img/car1.jpg' %}"/>
+<title>Giveaway</title>
+<style>
+.dash-main{
+    background-color: cornsilk;
+  }
+.odd{
+        background-color:darkgray;
+        }
+.even{
+        background-color: cornsilk;
+        }
+#comment-form{
+        display: none;
+    }
+.tdstyle{
+        background: url('/static/givers/img/beach.jpg');
+        background-size: auto;
+        color:black;
+    }
+.accstyle{
+        background: url('/static/givers/img/contact.jpeg');
+        background-size: auto;
+        color:black;
+    }
+
+    
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color:teal;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 15px;
+  color: black;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 25px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color:rgb(123, 204, 123);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color:teal;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+</style>
+</head>
+<body>
+
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
+  <a class="navbar-brand" href="{% url 'home' %}">
+    <img src="{% static 'givers/img/car1.jpg' %}" width="30" height="30" class="d-inline-block align-top">
+   <span>Giveaway</span>
+</a>
+  <a href="{% url 'blog:all_blogs' %}">Blog</a>
+  {% if user.is_authenticated %}
+  <a href="{% url 'creategift' %}">Offer Gift</a>
+  <a href="{% url 'giveaway' %}">Gifts</a>
+  <a href="{% url 'account_update' %}">Account Settings</a>
+  <a href="#">How it Works</a>
+  <a href="{% url 'contact' %}">Contact us</a>
+  <a href="{% url 'logoutuser' %}">Logout</a>
+  {% else %}
+  <a href="#">How it Works</a>
+  <a href="{% url 'contact' %}">Contact us</a>
+  {% endif %}
+</div>
+
+<div id="main">
+  <button class="openbtn" onclick="openNav()">☰ Menu</button>  
+</div>
+{% block content %}{% endblock %}
+<!-- reCAPTCHA API -->
+<script src='https://www.google.com/recaptcha/api.js?render={{recaptcha_site_key}}'></script>
+<script>
+function openNav() {
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>
+<script>
+  //global grecaptcha
+  grecaptcha.ready(function() {
+    grecaptcha.execute('{{recaptcha_site_key}}', {action: "{% url 'loginuser' %}"}).then(function(token) {
+      document.getElementById('g-recaptcha-response').value = token;
+    });
+  });
+</script>
+   
+</body>
+<div class="row" style="padding-top: 30px;">
+<div class="col-md-12 text-center">
+                            
+                                
+    <a href="#"><i class="fab fa-facebook-f"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-linkedin"></i></a>
+    <a href="#"><i class="fab fa-google-plus"></i></a>
+    <a href="#"><i class="fab fa-youtube"></i></a>
+    <a href="#"><i class="fa fa-rss"></i></a>
+    <p style="font-size: 13px;color:black;font-weight: 100;font-family:monospace;">Copyright 2021 Giveaway</p>
+</div>
+</div>
+</html> 

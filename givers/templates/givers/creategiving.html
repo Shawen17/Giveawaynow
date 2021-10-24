@@ -1,0 +1,33 @@
+{% extends 'givers/base.html'  %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+{% include 'givers/message.html' %}
+<div class="account">
+<div class="container">
+    <h1 style="text-align: center;font-weight: bolder;padding-top: 20px;">Create Gift</h1>
+    <br>
+
+    {{ error }}
+    <br>
+    <div class="row d-flex justify-content-center">
+    <form class="form-width" enctype="multipart/form-data" style="max-width: 18rem;border:slategray 2px solid;padding: 50px;border-radius: 15px;background-color: white;" method ='POST',action="{% url 'signupuser' %}">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button class="button button1"   type='submit' style='background-color:aqua;'>Gift</button>
+    </form>
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

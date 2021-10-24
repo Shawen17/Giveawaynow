@@ -1,0 +1,10 @@
+#ignore files related to API
+.env
+
+#django files
+*.log
+*.pyc
+*.pot
+__pycache__
+db.sqlite3
+media

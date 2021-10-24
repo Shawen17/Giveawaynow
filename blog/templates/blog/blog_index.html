@@ -1,0 +1,101 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Giveaway Blog</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" />
+    <link rel="stylesheet" href="{% static 'givers/css/all.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'givers/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'givers/css/templatemo-style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'givers/css/blog.css' %}"/>
+<!--
+Parallo Template
+https://templatemo.com/tm-534-parallo
+-->
+  </head>
+  <body>
+    <div class="parallax-window" data-parallax="scroll" data-image-src="{% static 'givers/img/4.jpg' %}">
+      <div class="container-fluid">
+        <div class="row tm-brand-row">
+          <div class="col-lg-4 col-11">
+            <div class="tm-brand-container tm-bg-white-transparent">
+              <div class="tm-brand-texts">
+                <h1 class="text-uppercase tm-brand-name">Giveaway</h1>
+                <p class="small">Articles for your delight</p>
+              </div>
+            </div>
+          </div>
+          <div  class="col-lg-4 col-0"></div>
+          <div class="col-lg-4 col-1">
+            <h3 style="padding-bottom: 10px;color:white">Available Categories</h3>
+            <ul>
+              {% for i in category %}
+              <li ><a id="cat" onclick="send_value()" name='category' href="{% url 'blog:category' i %}" style="color:white">{{ i }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <section class="row" id="tmHome">
+          <div class="col-12 tm-home-container">
+            <div class="text-white tm-home-left">
+              <p class="text-uppercase tm-slogan" style="color:white">We want to make your site experience interesting</p>
+              <hr class="tm-home-hr" />
+              <h2 class="tm-home-title" style="color: white;">We have {{ blog_count}} article{{ blog_count|pluralize }} for your reading pleasure</h2>
+              <p class="tm-home-text" style="color:white">
+                Reading has a way of making your mind travel, thereby bringing refreshment of mind.
+              </p>
+            </div>
+          </div>
+          {% for i in blogs  %}
+          {% if forloop.counter0|divisibleby:4 %}<div class="row" >{% endif %}
+            <div class="col-md-3 col-sm-6" style="color:white">
+            <div class="card" style="width: 18rem;padding-top: 20px;">
+              <img class="card-img-top" src="{{ i.image.url }}" alt="Card image cap" height=250 width=250 style="border-radius: 10px;">
+              <div class="card-body">
+                <h5 class="card-title" style="color: white;font-size:larger;"><b>{{ i.title|upper }}</b> <span style="padding-left: 10px;">{{ i.date|timesince }}</span></h5>
+                <p class="card-text">{{ i.story|safe|truncatechars:100 }}</p>
+                <a href="{% url 'blog:detail' i.id %}" class="btn btn-primary">Read More</a>
+              </div>
+            </div>
+          </div>
+          {% if forloop.counter|divisibleby:4 or forloop.last %}</div>{% endif %}
+        {% endfor %}
+
+        </section>
+        <div class="row" style="padding-top: 20px;">
+          <div class="col-md-11"></div>
+          <div class="col-md-1">
+            <a href="{% url 'blog:list_blog'  %}" style="color: white;">view all</a>
+          </div>
+          <div style="padding-bottom: 70px;"></div>
+        </div>
+
+        
+
+        
+      </div>
+      <!-- .container-fluid -->
+    </div>
+    
+    <script src="{% static 'givers/js/jquery.min.js' %}"></script>
+    <script src="{% static 'givers/js/parallax.min.js' %}"></script>
+    <script src="{% static 'givers/js/bootstrap.min.js' %}"></script>
+    <script>
+      function send_value(){
+        $.ajax({
+          url:'/category/',
+          method:'POST',
+          data:{quantity: $('#cat').val()},
+
+        });
+      }
+    </script>
+  </body>
+</html>

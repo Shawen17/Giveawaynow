@@ -1,0 +1,196 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<style>
+    .odd{
+        background-color:darkgray;
+        }
+    .even{
+        background-color: cornsilk;
+        }
+    #comment-form{
+        display: none;
+    }
+    .tdstyle{
+        background: url('/static/givers/img/beach.jpg');
+        background-size: auto;
+        color:black;
+    }
+    .accstyle{
+        background: url('/static/givers/img/contact.jpeg');
+        background-size: auto;
+        color:black;
+    }
+
+</style>
+   
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta  name="viewport" content="width=device-width,  initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{% static 'givers/css/base.css' %}"/>
+    <link rel="icon" type="image/jpg"  href="{% static 'givers/img/car1.jpg' %}"/>
+    <title>Giveaway</title>
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: teal;">
+<div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static 'givers/img/car1.jpg' %}" width="30" height="30" class="d-inline-block align-top">
+       <span>Giveaway</span>
+   </a>
+    <a class="navbar-brand" href="{% url 'blog:all_blogs' %}"><span style="color: rgb(16, 196, 202);">Blog</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        
+    {% if user.is_authenticated %}
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item {{ creategift }}">
+                <a class="nav-link" href="{% url 'creategift' %}">Offer gift</a>
+            </li>
+            <li class="nav-item {{ user_account }}">
+                <a class="nav-link" href="{% url 'user_account' %}">dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'giveaway' %}" onclick="$('#signOutBtn').click()" class="nav-link">Gifts</a>
+                <a>
+                    <form style='display: none;' method="POST" action="{% url 'giveaway' %}">
+                        {% csrf_token %}
+                        <button id="signOutBtn" type="submit">Gift</button>
+                    </form>
+                </a>
+            </li>
+            
+        </ul>
+    {% endif %}
+    <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+            <li class="nav-item {{ edit_profile }}">
+                <a class='nav-link' href="{% url 'account_update' %}">Update Profile</a>
+            </li>
+            
+            <li class="nav-item">
+                    <a href="{% url 'logoutuser' %}" onclick="$('#signOutBtn').click()" class="nav-link">Logout</a>
+                    <a>
+                        <form style='display: none;' method="POST" action="{% url 'logoutuser' %}">
+                            {% csrf_token %}
+                            <button id="signOutBtn" type="submit">Logout</button>
+                        </form>
+                    </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'signupuser' %}">SignUp</a>
+            </li>
+            <li class="nav-item" style="color:white;">
+                <a class="nav-link" href="{% url 'loginuser' %}">Login</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+</nav>
+
+        {% block content %}{% endblock %}
+   
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!-- reCAPTCHA API -->
+<script src='https://www.google.com/recaptcha/api.js?render={{recaptcha_site_key}}'></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script>
+    var form = document.getElementById('redeem-form');
+    var btn_appear = document.getElementById('btn-appear');
+    var btn_disappear =document.getElementById('btn-disappear');
+    var someval = document.getElementsByClassName('testvalues');
+    const newfile = new ActiveXObject("Scripting.FileSystemObject");
+    btn_appear.onclick= function(){
+        // Array.from(someval).forEach((ele)=>{
+        // if (ele.checked === true){
+        //     sessionStorage.setItem('name',ele.value)
+            
+        // }
+        // })
+        // console.log(someval)
+
+        form.style.display = 'block';
+    }
+    btn_disappear.onclick = function(){
+        form.style.display = 'none';
+    }
+    window.onclick = function(event){
+        if (event.target == form){
+            form.style.display = 'none';
+        }
+    }
+</script>
+<script>
+    //global grecaptcha
+    grecaptcha.ready(function() {
+      grecaptcha.execute('{{recaptcha_site_key}}', {action: "{% url 'loginuser' %}"}).then(function(token) {
+        document.getElementById('g-recaptcha-response').value = token;
+      });
+    });
+</script>
+
+</body>
+<div  style="background-color:teal;">
+        
+    <div class="row" style="background-color: teal;padding-top: 20px;">
+        <div class="col-xs-5 col-md-5">
+            
+                <ul >
+                    <li class="foot-list" style="flex: left;"><b>Our Services</b></li>
+                   
+                    <li class="foot-list" style="flex: left;">
+                        <a class='a'  href="{% url 'contact' %}">Contact us</a>
+                    </li>
+                </ul>
+        </div>
+        <div class="col-xs-1 col-md-1"></div>
+        <div class="col-xs-1 col-md-1"></div>
+        
+            <div class="col-xs-5 col-md-5">
+                 <ul >
+                    <li class="foot-list" style="flex: right;">
+                        <a class='a' href="#">policy</a>
+                    </li>
+                    <li class="foot-list" style="flex: right;">
+                        <a class='a' href="">About us</a>
+                    </li> 
+                    <li class="foot-list" style="flex: right;">
+                        <a class='a' href="">how it works</a>
+                    </li>
+                </ul>
+            </div>
+        <div class="col-md-12 text-center">
+                            
+                                
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-google-plus"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <p style="font-size: 13px;color:black;font-weight: 100;font-family:monospace;">Copyright 2021 Giveaway</p>
+        </div>
+        
+
+    </div>
+</div>
+
+</html>

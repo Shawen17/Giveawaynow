@@ -1,0 +1,30 @@
+{% extends 'givers/index.html' %}
+
+{%  block content %}
+
+
+{% load crispy_forms_tags %}
+
+<div class="account">
+
+<h2 style="padding-left: 20px;">kindly update your account {{ user.username }}</h2>
+<br>
+<p style="padding-left: 20px;">{{ error }}</p>
+<div class="row d-flex justify-content-center">
+    <a href="{% url 'password_reset' %}">Change Password?</a>
+</div>
+<div class="row d-flex justify-content-center">
+    <form class="form-width" enctype="multipart/form-data"  style="max-width: 18rem;border:slategray 2px solid;padding: 50px;border-radius: 15px;background-color: white;"  method="POST" action="{% url 'account_update' %}">
+    {% csrf_token %}
+        <table>
+        {{ profile_form | crispy }}
+        </table>
+        <button class="button button1"  type="submit">Update</button>
+    </form>
+</div>
+
+
+
+
+{% endblock %}
+

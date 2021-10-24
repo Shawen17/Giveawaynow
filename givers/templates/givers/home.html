@@ -1,0 +1,149 @@
+{%  extends 'givers/base.html' %}
+
+
+{% load static %}
+
+
+{% block content %}
+{% include 'givers/message.html' %}
+<!-- SIDEBAR -->
+        
+
+     <!-- top-section -->
+   
+    
+     <!-- .main-navigation -->
+     <!-- .social-icons -->
+ <!-- .sidebar-menu -->
+
+
+
+
+<div class="main-content">
+    <div class="fluid-container" style="padding-top: 10px;">
+        <div class="container">
+        <div class="banner-bg" id="top" >
+            <div class="banner-overlay"></div>
+            <div class="welcome-text">
+                <h2 style="padding-top: 30px;">Simple Thought | Great Impact</h2>
+                <h5><span style="padding: 16px;"> This is an avenue to make someone somewhere smile by giving out items that are not of use to you but will be a fortune for another person.</span></h5>
+            </div>
+        </div>
+    </div>
+        
+        <div id="projects">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="widget-title" style="padding-left: 15px;">SAMPLE OF THINGS TO GIVE</h4>
+                    <p style="padding-left: 15px;">Don't underestimate what that thing you no longer value will mean to somebody out there, so kindly GIVE.</p>
+                </div>
+            </div>
+            <div class="row projects-holder">
+                <div class="col-md-4 col-sm-6">
+                    <div class="project-item">
+                        <img src="{% static  'givers/img/grocery.jpg' %}" alt="" height="200" width="350">
+                        <div class="project-hover">
+                            <div class="inside">
+                                <h5><a href="{% url 'giveaway' %}">Food Items</a></h5>
+                                <p>spaghetti,butter,groundnutoil,rice,beans and the likes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="project-item">
+                        <img src="{% static 'givers/img/books.jpg' %}" alt="" height="200" width="350">
+                        <div class="project-hover">
+                            <div class="inside">
+                                <h5><a href="{% url 'giveaway' %}">Books/Novels</a></h5>
+                                <p>interesting books to read</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="project-item">
+                        <img src="{% static 'givers/img/furniture.jpg' %}" alt="" height="200" width="350">
+                        <div class="project-hover">
+                            <div class="inside">
+                                <h5><a href="{% url 'giveaway' %}">Furnitures</a></h5>
+                                <p>ranging from reading table/chair to dinning sets and sitting chairs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="project-item">
+                        <img src="{% static 'givers/img/beauty_product.jpg' %}" alt="" height="200" width="350">
+                        <div class="project-hover">
+                            <div class="inside">
+                                <h5><a href="{% url 'giveaway' %}">Beauty Products</a></h5>
+                                <p>beauty products, makeup accessories alike</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="project-item">
+                        <img src="{% static  'givers/img/baby_toys.jpg' %}" alt="" height="200" width="350">
+                        <div class="project-hover">
+                            <div class="inside">
+                                <h5><a href="{% url 'giveaway' %}">Toys</a></h5>
+                                <p>Any toy that your kids have outgrown</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="project-item">
+                        <img src="{% static 'givers/img/kitchen_utencils.jpg'  %}" alt="" height="200" width="350">
+                        <div class="project-hover">
+                            <div class="inside">
+                                <h5><a href="{% url 'giveaway' %}">Kitchen Utencils</a></h5>
+                                <p>All range of cooking and kitchen utencils</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="project-item">
+                        <img src="{% static 'givers/img/clothe_shoe.jpg'  %}" alt="" height="200" width="350">
+                        <div class="project-hover">
+                            <div class="inside">
+                                <h5><a href="{% url 'giveaway' %}">Wardrobe Items</a></h5>
+                                <p>Outgrown/unused clothe items and shoes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="project-item">
+                        <img src="{% static 'givers/img/phone_accessories.jpg'  %}" alt="" height="200" width="350">
+                        <div class="project-hover">
+                            <div class="inside">
+                                <h5><a href="{% url 'giveaway' %}">Phones/Accessories</a></h5>
+                                <p>Earpods,chargers,headsets,cables and unused phones</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="project-item">
+                        <img src="{% static 'givers/img/plasma_television.jpg'  %}" alt="" height="200" width="350">
+                        <div class="project-hover">
+                            <div class="inside">
+                                <h5><a href="{% url 'giveaway' %}">Electronics</a></h5>
+                                <p>Household electronics ranging from soundbars,home theatres,television and the likes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- .projects-holder -->
+        </div>
+            <hr>
+
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'givers/base_dashboard.html' %} 
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Giveaway Blog</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" />
+    <link rel="stylesheet" href="{% static 'givers/css/all.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'givers/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'givers/css/templatemo-style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'givers/css/blog.css' %}"/>
+<!--
+Parallo Template
+https://templatemo.com/tm-534-parallo
+-->
+  </head>
+
+<body>
+    <div class="parallax-window" data-parallax="scroll" data-image-src="{% static 'givers/img/city1.jpg' %}">
+<div style="padding-top: 60px;">
+<h3 style="color: white;font-size: larger;">{{ posts.title }}</h3>
+<h4 style="color:white"> {{ posts.genre }}</h4>
+<h5 style="color:white">---{{   posts.date|date:'F jS Y'|upper }}---</h5>
+</div>
+<hr>
+<div class="container-fluid">
+<div class="row">
+    <textarea readonly  class="blog" style="border: turquoise 2px solid;overflow: auto;background-color: rgb(211, 215, 219);border-radius:12px ;" >{{ posts.story|safe }}</textarea>
+</div>
+    <div class="row">
+        <div class="col-sm-9 col-md-10 col-lg-11"></div>
+        <div class="col-sm-3 col-md-2 col-lg-1"><button style="border-radius: 12px 30px;background-color: mediumspringgreen;text-align: center;font-family: fantasy;font-size: 0.85rem;" id="btn-appear">comment</button></div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-6 col-md-7 col-lg-8">{{ error }}</div>
+        <div class="col-sm-6 col-md-5 col-lg-4">
+            <form  method="post" id = "comment-form" action="{% url 'blog:post_comment' posts.id %}">
+                 {% csrf_token %}
+                <table>
+                {{ comment_form | crispy }}
+                </table>
+                <button class="button button1" id='btn-disappear'  type='submit'>submit</button>
+            </form>
+        </div>
+        <hr>
+        {% for i in comments %}
+        {% if forloop.counter0|divisibleby:3 %}<div class="row">{% endif %}
+        <div class="col-sm-6 col-md-4">
+            <b style="color:rgb(241, 167, 55);">{{  i.email }}</b> <span style="padding-left: 10px;"></span> <b style="color:rgb(241, 167, 55);">{{ i.created|timesince }} ago</b>
+            <p style="color:rgb(241, 167, 55)">{{ i.body }}</p>
+            <hr>
+        </div>
+        {% if forloop.counter|divisibleby:3 or forloop.last %}</div>{% endif %}
+{% endfor %}
+    
+    </div>
+    
+</div>
+    </div>
+
+
+
+
+
+
+
+    <script src="{% static 'givers/js/jquery.min.js' %}"></script>
+    <script src="{% static 'givers/js/parallax.min.js' %}"></script>
+    <script src="{% static 'givers/js/bootstrap.min.js' %}"></script>
+    <script>
+        const form = document.querySelector('#comment-form');
+        const btn_appear = document.querySelector('#btn-appear');
+        const btn_disappear =document.getElementById('btn-disappear');
+        btn_appear.addEventListener('click',formAppear);
+        btn_disappear.addEventListener('click',formDisappear);
+        function formAppear(){
+            form.style.display = 'block';
+        }
+        function formDisappear(){
+            form.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+{% endblock %}
